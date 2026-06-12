@@ -29,7 +29,7 @@ python_projects_assister/
 ├── run_dev.sh
 │
 ├── firmware/
-│   └── serialscope/          arduino sketch (works on uno and esp32)
+│   └── Serialscope/          arduino sketch (works on uno and esp32)
 │
 ├── backend/                  python (fastapi + pyserial + websockets)
 │   ├── app.py

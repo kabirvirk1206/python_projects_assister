@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Serialscope</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+<header>
+  <div class="tag">Serialscope &middot; Arduino &middot; ESP32 &middot; STM32</div>
+  <div class="right">
+    <span id="status-dot" class="dot off"></span>
+    <span id="status-text">not connected</span>
+  </div>
+</header>
+
+<div class="layout">
+
+  <aside class="sidebar">
+
+    <div class="card">
+      <h3>BOARD &amp; PORT</h3>
+      <label class="label">Board</label>
+      <select id="board-select"></select>
+
+      <div class="row spaced" style="margin-top:12px;margin-bottom:4px;">
+        <span class="label" style="margin:0;">USB PORTS</span>
+        <button id="rescan-btn" class="btn ghost">rescan</button>
+      </div>
+
+      <div id="port-list"></div>
+      <div id="port-msg" class="muted" style="margin-top:6px;"></div>
+    </div>
+
+    <div class="card">
+      <h3>I&sup2;C SCANNER</h3>
+      <label class="label">port</label>
+      <input type="text" id="i2c-port" value="demo">
+      <label class="label" style="margin-top:8px;">baud</label>
+      <input type="text" id="i2c-baud" value="115200">
+      <button id="i2c-scan-btn" class="btn" style="width:100%;margin-top:10px;">Run I2C Scan</button>
+
+      <div class="i2c-grid" id="i2c-grid"></div>
+      <div id="i2c-devices" class="device-list"></div>
+      <div id="i2c-msg" class="muted" style="margin-top:8px;"></div>
+    </div>
+
+  </aside>
+
+  <main class="main">
+
+    <div class="card">
+      <div class="row spaced">
+        <h3 style="margin:0;">OSCILLOSCOPE</h3>
+        <div class="readouts">
+          <div class="readout"><div class="l">NOW</div><div class="v" id="rd-now">0.00 V</div></div>
+          <div class="readout"><div class="l">MIN</div><div class="v" id="rd-min">0.00 V</div></div>
+          <div class="readout"><div class="l">MAX</div><div class="v" id="rd-max">0.00 V</div></div>
+        </div>
+      </div>
+
+      <div class="scope-controls">
+        <div class="slider-wrap">
+          <label class="label">SAMPLE RATE: <span id="rate-val">30</span> Hz</label>
+          <input type="range" id="rate" min="1" max="100" value="30">
+        </div>
+        <div style="width:120px;">
+          <label class="label">BAUD</label>
+          <input type="text" id="scope-baud" value="115200">
+        </div>
+        <div class="row" style="gap:10px;padding-bottom:4px;">
+          <button id="scope-btn" class="btn">Start</button>
+        </div>
+      </div>
+
+      <svg id="scope-svg" class="scope-svg" viewBox="0 0 800 260" preserveAspectRatio="none">
+        <g class="grid">
+          <line x1="0" y1="40"  x2="800" y2="40"/>
+          <line x1="0" y1="80"  x2="800" y2="80"/>
+          <line x1="0" y1="120" x2="800" y2="120"/>
+          <line x1="0" y1="160" x2="800" y2="160"/>
+          <line x1="0" y1="200" x2="800" y2="200"/>
+          <line x1="0" y1="240" x2="800" y2="240"/>
+          <line x1="100" y1="0" x2="100" y2="260"/>
+          <line x1="200" y1="0" x2="200" y2="260"/>
+          <line x1="300" y1="0" x2="300" y2="260"/>
+          <line x1="400" y1="0" x2="400" y2="260"/>
+          <line x1="500" y1="0" x2="500" y2="260"/>
+          <line x1="600" y1="0" x2="600" y2="260"/>
+          <line x1="700" y1="0" x2="700" y2="260"/>
+        </g>
+        <line class="ref" x1="0" y1="20"  x2="800" y2="20"  stroke="#ef5e5e"/>
+        <text x="6" y="16" fill="#ef5e5e">5.0V</text>
+        <line class="ref" x1="0" y1="92"  x2="800" y2="92"  stroke="#6ea8ff"/>
+        <text x="6" y="88" fill="#6ea8ff">3.3V</text>
+        <polyline id="scope-line" fill="none" stroke="#5fd07a" stroke-width="2" points=""/>
+      </svg>
+    </div>
+
+    <div class="card">
+      <div class="pinout-head">
+        <h3 style="margin:0;">PINOUT — <span id="pinout-name">...</span></h3>
+        <input type="text" id="pin-filter" placeholder="filter (e.g. spi, adc, gpio21)" style="max-width:260px;">
+      </div>
+
+      <div id="pinout" class="pinout">
+        <div class="pin-col" id="pins-left"></div>
+        <div class="chip" id="chip-label">chip</div>
+        <div class="pin-col" id="pins-right"></div>
+      </div>
+
+      <div id="pin-detail" class="pin-detail" style="display:none;"></div>
+
+      <div class="legend">
+        <span class="l-gpio">GPIO</span>
+        <span class="l-i2c">I&sup2;C</span>
+        <span class="l-spi">SPI</span>
+        <span class="l-uart">UART</span>
+        <span class="l-adc">ADC</span>
+        <span class="l-pwr">Power</span>
+        <span class="l-gnd">GND</span>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<footer>
+  &copy; Kabir Virk 2026
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

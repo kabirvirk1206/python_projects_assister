@@ -27,7 +27,6 @@ Boards i actually own and that this supports:
 python_projects_assister/
 ├── README.md
 ├── run_dev.sh
-├── preview.html              single file preview (drop into a browser)
 │
 ├── firmware/
 │   └── serialscope/          arduino sketch (works on uno and esp32)
